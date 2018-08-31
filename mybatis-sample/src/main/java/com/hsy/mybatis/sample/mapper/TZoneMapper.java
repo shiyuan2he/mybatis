@@ -1,4 +1,4 @@
-package com.hsy.mybatis.sample.dao;
+package com.hsy.mybatis.sample.mapper;
 
 import com.hsy.mybatis.sample.entity.TZone;
 import com.hsy.mybatis.sample.entity.TZoneExample;

@@ -35,7 +35,7 @@
         <sqlMapGenerator targetPackage="mapper"  targetProject="C:\devTools\repository\git\mybatis\mybatis-sample\src\main\resources"/>
         <!--生成mapper，XMLMAPPER表示接口和mapper分离-->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="com.hsy.mybatis.sample.dao"
+                             targetPackage="com.hsy.mybatis.sample.mapper"
                              targetProject="C:\devTools\repository\git\mybatis\mybatis-sample\src\main\java"/>
 
         <!--% 通配符 匹配数据库中的所有表-->

@@ -219,4 +219,16 @@ public class TZone {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    @Override
+    public String toString() {
+        return "TZone{" +
+                "id=" + id +
+                ", code=" + code +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", sortId=" + sortId +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

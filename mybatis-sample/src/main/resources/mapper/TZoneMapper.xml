@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hsy.mybatis.sample.dao.TZoneMapper">
+<mapper namespace="com.hsy.mybatis.sample.mapper.TZoneMapper">
   <resultMap id="BaseResultMap" type="com.hsy.mybatis.sample.entity.TZone">
     <!--
       WARNING - @mbg.generated
