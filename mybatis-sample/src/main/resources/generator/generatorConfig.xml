@@ -21,22 +21,22 @@
 
         <!--简单的配置了数据库的连接信息-->
         <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
-                        connectionURL="jdbc:mariadb://172.16.191.102:3306/bigdata"
+                        connectionURL="jdbc:mariadb://192.168.216.200:3306/bigdata"
                         userId="root"
                         password="root@mariadb">
         </jdbcConnection>
 
         <!--实体对应的包名-->
         <javaModelGenerator targetPackage="com.hsy.mybatis.sample.entity"
-                            targetProject="C:\devTools\repository\git\mybatis\mybatis-sample\src\main\java">
+                            targetProject="/Users/heshiyuan/data/devTools/repo/git/mybatis/mybatis-sample/src/main/java">
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mapper"  targetProject="C:\devTools\repository\git\mybatis\mybatis-sample\src\main\resources"/>
+        <sqlMapGenerator targetPackage="mapper"  targetProject="/Users/heshiyuan/data/devTools/repo/git/mybatis/mybatis-sample/src/main/resources"/>
         <!--生成mapper，XMLMAPPER表示接口和mapper分离-->
         <javaClientGenerator type="XMLMAPPER"
                              targetPackage="com.hsy.mybatis.sample.dao"
-                             targetProject="C:\devTools\repository\git\mybatis\mybatis-sample\src\main\java"/>
+                             targetProject="/Users/heshiyuan/data/devTools/repo/git/mybatis/mybatis-sample/src/main/java"/>
 
         <!--% 通配符 匹配数据库中的所有表-->
         <table tableName="%">
