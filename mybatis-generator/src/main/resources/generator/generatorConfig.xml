@@ -20,28 +20,43 @@
         </commentGenerator>
 
         <!--简单的配置了数据库的连接信息-->
-        <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
+        <!--<jdbcConnection driverClass="org.mariadb.jdbc.Driver"
                         connectionURL="jdbc:mariadb://192.168.216.200:3306/v_exam"
                         userId="root"
                         password="root@mariadb">
+        </jdbcConnection>-->
+
+        <!--简单的配置了数据库的连接信息-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://120.92.79.194:3306/tangram_v3_dev"
+                        userId="lima_user"
+                        password="Mysql@1234">
         </jdbcConnection>
 
         <!--实体对应的包名-->
-        <javaModelGenerator targetPackage="org.exam.bean.entity"
-                            targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/">
+        <javaModelGenerator targetPackage="com.hsy.mybatis.generator.entity"
+                            targetProject="D:\\devTools\\repository\\git\hsy\\mybatis\\mybatis-generator\\src\\main\\java">
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mybatis-mapper"  targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/resources"/>
+        <sqlMapGenerator targetPackage="mybatis-mapper"  targetProject="D:\\devTools\\repository\\git\hsy\\mybatis\\mybatis-generator\\src\\main\\resources"/>
         <!--生成mapper，XMLMAPPER表示接口和mapper分离-->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="org.exam.mapper"
-                             targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/"/>
+                             targetPackage="com.hsy.mybatis.generator"
+                             targetProject="D:\\devTools\\repository\\git\hsy\\mybatis\\mybatis-generator\\src\\main\\java"/>
 
         <!--% 通配符 匹配数据库中的所有表-->
-        <table tableName="%">
+        <table tableName="org_info">
+       <!-- <table tableName="current_ua" domainObjectName="UaInfo"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
+
             <!--所有表都有自增主键的id字段，sqlStatement针对当前数据库为Mariadb-->
-            <generatedKey column="id" sqlStatement="Mariadb"/>
+            <!--<generatedKey column="id" sqlStatement="Mariadb"/>-->
             <!-- Mysql -->
         </table>
     </context>
