@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
+    <properties resource="generatorConfig.properties"></properties>
     <!-- 具体配置内容 -->
     <!--
     targetRuntime 设置成MyBatis3Simple，主要是为了避免生成于Example相关的代码，如果需要Example相关的代码，也可以设置成Mybatis3
@@ -10,31 +11,46 @@
     -->
     <context id="MariadbContext" targetRuntime="MyBatis3" defaultModelType="flat">
         <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表； 一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 -->
-        <property name="autoDelimitKeywords" value="false" />
+        <!--<property name="autoDelimitKeywords" value="false" />-->
         <!-- 生成的Java文件的编码 -->
         <property name="javaFileEncoding" value="UTF-8" />
         <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <!--beginningDelimiter、endingDelimiter mysql数据库使用`-->
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
         <!--注释生成器中配置了生成数据库的注释信息，并且禁止在注释中生成日期-->
         <commentGenerator>
-            <property name="suppressDate" value="true"/>
+            <property name="suppressDate" value="false"/>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="true" />
+            <property name="suppressAllComments" value="false" />
+            <!--将备注转换成注释代码-->
             <property name="addRemarkComments" value="true"/>
         </commentGenerator>
 
         <!--简单的配置了数据库的连接信息-->
-        <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
-                        connectionURL="jdbc:mariadb://192.168.216.129:3306/v_exam"
-                        userId="root"
-                        password="root@mariadb">
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+            <property name="useInformationSchema" value="true"/>
         </jdbcConnection>
 
+        <!--简单的配置了数据库的连接信息-->
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://120.92.79.194:3306/tangram_v3_dev"
+                        userId="lima_user"
+                        password="zhifou@1$SE23">
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>-->
+        <javaTypeResolver type="com.hsy.mybatis.generator.MyJavaTypeResolver">
+            <!--<property name="forceBigDecimals" value="false"/>-->
+        </javaTypeResolver>
+
         <!--实体对应的包名-->
-        <javaModelGenerator targetPackage="org.exam.bean.entity"
-                            targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/">
+        <javaModelGenerator targetPackage="${targetPackage}"
+                            targetProject="${targetProject}">
+            <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true" />
             <!-- for MyBatis3/MyBatis3Simple 自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter； -->
             <property name="constructorBased" value="false" />
@@ -51,9 +67,11 @@
                 2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是XML会生成在XML中；
                 3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
              注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER -->
+        <!--targetPackage="com.hsy.mybatis.generator.dao"
+                             targetProject="D:\\devTools\\repository\\git\\hsy\\mybatis\\mybatis-generator\\src\\main\\java"-->
         <javaClientGenerator type="MIXEDMAPPER"
-                             targetPackage="org.exam.mapper"
-                             targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/">
+                             targetPackage="${mapperPackage}"
+                             targetProject="${targetProject}">
             <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
