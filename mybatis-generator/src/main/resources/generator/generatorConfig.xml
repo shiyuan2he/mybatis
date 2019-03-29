@@ -8,20 +8,26 @@
     targetRuntime 设置成MyBatis3Simple，主要是为了避免生成于Example相关的代码，如果需要Example相关的代码，也可以设置成Mybatis3
     defaultModelType设置为flat，目的是使每个表只生成一个实体类，当没有复杂的类继承时，使用起来更方便
     -->
-    <context id="MariadbContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-        <!--beginningDelimiter、endingDelimiter mysql数据库使用`-->
+    <context id="MariadbContext" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表； 一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 -->
+        <property name="autoDelimitKeywords" value="false" />
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8" />
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
         <!--注释生成器中配置了生成数据库的注释信息，并且禁止在注释中生成日期-->
         <commentGenerator>
             <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
             <property name="addRemarkComments" value="true"/>
         </commentGenerator>
 
         <!--简单的配置了数据库的连接信息-->
         <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
-                        connectionURL="jdbc:mariadb://192.168.216.200:3306/v_exam"
+                        connectionURL="jdbc:mariadb://192.168.216.129:3306/v_exam"
                         userId="root"
                         password="root@mariadb">
         </jdbcConnection>
@@ -30,19 +36,34 @@
         <javaModelGenerator targetPackage="org.exam.bean.entity"
                             targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/">
             <property name="trimStrings" value="true" />
+            <!-- for MyBatis3/MyBatis3Simple 自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter； -->
+            <property name="constructorBased" value="false" />
+            <!-- for MyBatis3 / MyBatis3Simple 是否创建一个不可变的类，如果为true， 那么MBG会创建一个没有setter方法的类，取而代之的是类似constructorBased的类 -->
+            <property name="immutable" value="false" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mybatis-mapper"  targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/resources"/>
-        <!--生成mapper，XMLMAPPER表示接口和mapper分离-->
-        <javaClientGenerator type="XMLMAPPER"
+        <sqlMapGenerator targetPackage="mybatis-mapper"  targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- 对于mybatis来说，即生成Mapper接口，注意，如果没有配置该元素，那么默认不会生成Mapper接口 targetPackage/targetProject:同javaModelGenerator
+             type：选择怎么生成mapper接口（在MyBatis3/MyBatis3Simple下）：
+                1，ANNOTATEDMAPPER：会生成使用Mapper接口+Annotation的方式创建（SQL生成在annotation中），不会生成对应的XML；
+                2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是XML会生成在XML中；
+                3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
+             注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER -->
+        <javaClientGenerator type="MIXEDMAPPER"
                              targetPackage="org.exam.mapper"
-                             targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/"/>
+                             targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/java/">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
 
         <!--% 通配符 匹配数据库中的所有表-->
-        <table tableName="%">
-            <!--所有表都有自增主键的id字段，sqlStatement针对当前数据库为Mariadb-->
-            <generatedKey column="id" sqlStatement="Mariadb"/>
-            <!-- Mysql -->
+        <table tableName="t_academy">
+            <!-- 参考 javaModelGenerator 的 constructorBased属性 -->
+            <!--<property name="constructorBased" value="false" />-->
+            <!-- 主键 -->
+            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
         </table>
     </context>
 </generatorConfiguration>
