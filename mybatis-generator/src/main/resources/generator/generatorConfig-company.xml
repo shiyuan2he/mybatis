@@ -17,9 +17,9 @@
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <!--禁用注释代码-->
-            <property name="suppressAllComments" value="false"/>
+            <property name="suppressAllComments" value="true"/>
             <!--将备注转换成注释代码-->
-            <property name="addRemarkComments" value="true"/>
+            <!--<property name="addRemarkComments" value="true"/>-->
         </commentGenerator>
 
         <!--简单的配置了数据库的连接信息-->
@@ -33,7 +33,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://120.92.79.194:3306/tangram_v3_dev"
                         userId="lima_user"
-                        password="zhifou@1$SE23">
+                        password="Mysql@1234">
             <property name="useInformationSchema" value="true"/>
         </jdbcConnection>
 
@@ -42,23 +42,24 @@
         </javaTypeResolver>
 
         <!--实体对应的包名-->
-        <javaModelGenerator targetPackage="com.hsy.mybatis.generator.entity"
-                            targetProject="D:\\devTools\\repository\\git\\hsy\\mybatis\\mybatis-generator\\src\\main\\java">
+        <javaModelGenerator targetPackage="com.lima.apiserver.currentCenter.entity"
+                            targetProject="D:\\devTools\\repository\\git\\apiserver\\src\\main\\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mybatis-mapper"
-                         targetProject="D:\\devTools\\repository\\git\\hsy\\mybatis\\mybatis-generator\\src\\main\\resources">
+                         targetProject="D:\\devTools\\repository\\git\\apiserver\\src\\main\\resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成mapper，XMLMAPPER表示接口和mapper分离-->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="com.hsy.mybatis.generator.dao"
-                             targetProject="D:\\devTools\\repository\\git\\hsy\\mybatis\\mybatis-generator\\src\\main\\java"/>
+                             targetPackage="com.lima.apiserver.currentCenter.dao"
+                             targetProject="D:\\devTools\\repository\\git\\apiserver\\src\\main\\java"/>
 
         <!--% 通配符 匹配数据库中的所有表-->
-       <table tableName="platform_user_apply"></table>
+       <table tableName="platform_tenant">
+       </table>
        <!--domainObjectName="UaInfo"-->
        <!--<table tableName="policy"
                enableCountByExample="false"
