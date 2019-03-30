@@ -3,7 +3,8 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-    <properties resource="generatorConfig.properties"></properties>
+    <!--<properties resource="generatorConfig.properties"></properties>-->
+    <properties resource="generatorConfig-company.properties"></properties>
     <!-- 具体配置内容 -->
     <!--
     targetRuntime 设置成MyBatis3Simple，主要是为了避免生成于Example相关的代码，如果需要Example相关的代码，也可以设置成Mybatis3
@@ -58,7 +59,7 @@
             <property name="immutable" value="false" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mybatis-mapper"  targetProject="/Users/heshiyuan/data/devTools/repo/git/VExam/exam-server/src/main/resources">
+        <sqlMapGenerator targetPackage="mybatis-mapper"  targetProject="${targetResource}">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
         <!-- 对于mybatis来说，即生成Mapper接口，注意，如果没有配置该元素，那么默认不会生成Mapper接口 targetPackage/targetProject:同javaModelGenerator
@@ -77,11 +78,13 @@
         </javaClientGenerator>
 
         <!--% 通配符 匹配数据库中的所有表-->
-        <table tableName="t_academy">
+        <table tableName="t_question_choice">
             <!-- 参考 javaModelGenerator 的 constructorBased属性 -->
             <!--<property name="constructorBased" value="false" />-->
             <!-- 主键 -->
             <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
         </table>
+        <table tableName="t_question_judge"/>
+        <table tableName="t_question_short_answer"/>
     </context>
 </generatorConfiguration>
