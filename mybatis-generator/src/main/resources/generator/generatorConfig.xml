@@ -78,13 +78,11 @@
         </javaClientGenerator>
 
         <!--% 通配符 匹配数据库中的所有表-->
-        <table tableName="t_question_choice">
+        <table tableName="platform_oauth_record">
             <!-- 参考 javaModelGenerator 的 constructorBased属性 -->
             <!--<property name="constructorBased" value="false" />-->
             <!-- 主键 -->
             <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
         </table>
-        <table tableName="t_question_judge"/>
-        <table tableName="t_question_short_answer"/>
     </context>
 </generatorConfiguration>
