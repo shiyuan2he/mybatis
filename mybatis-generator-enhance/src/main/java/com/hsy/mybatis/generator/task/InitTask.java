@@ -67,14 +67,14 @@ public class InitTask extends AbstractApplicationTask {
         try {
             conn = DbUtil.getConn();
             DatabaseMetaData dbMetaData = conn.getMetaData();
-            
+            logger.info("数据库类型：{}", dbMetaData.getDatabaseProductName());
+            logger.info("数据库版本：{}", dbMetaData.getDatabaseProductVersion());
             String schemaPattern = Configuration.getString("base.schemaPattern");
-            
             //获取表的结果集
-            tableRS = dbMetaData.getTables(null, schemaPattern, Constants.EMPTY_STR, new String[] {"TABLE"});
-            
+            tableRS = dbMetaData.getTables(null, schemaPattern, null, new String[] {"TABLE"});
+
             //遍历
-            Map<String, TableInfo> tableInfos = new HashMap<String, TableInfo>();
+            Map<String, TableInfo> tableInfos = new HashMap<>(10);
             while(tableRS.next()) {
                 //表名
                 String tableName = tableRS.getString("TABLE_NAME").toLowerCase();
@@ -98,7 +98,7 @@ public class InitTask extends AbstractApplicationTask {
                     
                     //字段
                     //获取列的结果集
-                    columnRS = dbMetaData.getColumns(null,schemaPattern, tableName, Constants.EMPTY_STR);
+                    columnRS = dbMetaData.getColumns(null,schemaPattern, tableName, null);
                     
                     List<ColumnInfo> columnList = new ArrayList<ColumnInfo>();
                     while(columnRS.next()) {
@@ -107,11 +107,11 @@ public class InitTask extends AbstractApplicationTask {
                         String columnRemark = columnRS.getString("REMARKS");
                         logger.info("字段名称：{}, 字段类型：{}, 字段注释：{}", columnName, columnType, columnRemark);
                         
-                        int len = columnRS.getInt("COLUMN_SIZE");
-//                        logger.info("字段长度：{}", len);
-                        
+o                        int len = columnRS.getInt("COLUMN_SIZE");
+                        logger.info("字段长度：{}", len);
+
                         int precision = columnRS.getInt("DECIMAL_DIGITS");
-//                        logger.info("字段类型精度：{}", precision);
+                        logger.info("字段类型精度：{}", precision);
 
                         if (columnName == null || "".equals(columnName)) {
                             continue;

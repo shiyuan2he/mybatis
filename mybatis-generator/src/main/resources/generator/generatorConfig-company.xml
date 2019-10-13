@@ -58,7 +58,7 @@
                              targetProject="D:\\devTools\\repository\\git\\apiserver\\src\\main\\java"/>
 
         <!--% 通配符 匹配数据库中的所有表-->
-       <table tableName="platform_tenant">
+       <table tableName="">
        </table>
        <!--domainObjectName="UaInfo"-->
        <!--<table tableName="policy"

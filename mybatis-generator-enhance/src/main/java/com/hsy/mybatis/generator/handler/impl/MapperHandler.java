@@ -37,35 +37,10 @@ public class MapperHandler extends BaseHandler<MapperInfo> {
         //resultMap
         Map<String, String> propJdbcTypes = info.getEntityInfo().getPropJdbcTypes();
         for (Entry<String, String> entry : info.getEntityInfo().getPropNameColumnNames().entrySet()) {
-            String propName = entry.getKey();
-            String columnName = entry.getValue();
-            
-            if (!("id".equals(propName))) {
-                resultMap.append("    <result column=\"").append(columnName).append("\" jdbcType=\"")
-                .append(propJdbcTypes.get(propName)).append("\" property=\"").append(propName)
-                .append("\" />\r\n");
-                
-                if ((!("created".equals(propName))) && !("createdby".equals(propName))) {
-                    /**
-                     * <if test="code != null">
-                        CODE = #{code,jdbcType=VARCHAR},
-                      </if>
-                     */
-                    updateColProps.append("      <if test=\"").append(propName).append(" != null\">\r\n        ").append(columnName).append("=#{")
-                    .append(propName).append(",jdbcType=").append(propJdbcTypes.get(propName)).append("},\r\n").append("      </if>\r\n");
-                
-                    /**
-                     * <if test="isDelete != null">
-                        IS_DELETE = #{item.isDelete,jdbcType=VARCHAR},
-                      </if>
-                     */
-                    updateBatchColProps.append("        <if test=\"item.").append(propName).append(" != null\">\r\n          ").append(columnName).append("=#{item.")
-                    .append(propName).append(",jdbcType=").append(propJdbcTypes.get(propName)).append("},\r\n").append("        </if>\r\n");
-                }
-               
-            }
-            baseColumn.append(columnName).append(",");
-            
+            Name name = new Name(resultMap, baseColumn, updateColProps, updateBatchColProps, propJdbcTypes, entry).invoke();
+            String propName = name.getPropName();
+            String columnName = name.getColumnName();
+
             if (!("updated".equals(propName)) && !("updatedby".equals(propName))) {
                 /**
                  * <if test="id != null">
@@ -102,4 +77,63 @@ public class MapperHandler extends BaseHandler<MapperInfo> {
         this.param.put("updateBatchColProps", updateBatchColProps.toString());
     }
 
+    private class Name {
+        private StringBuilder resultMap;
+        private StringBuilder baseColumn;
+        private StringBuilder updateColProps;
+        private StringBuilder updateBatchColProps;
+        private Map<String, String> propJdbcTypes;
+        private Entry<String, String> entry;
+        private String propName;
+        private String columnName;
+
+        public Name(StringBuilder resultMap, StringBuilder baseColumn, StringBuilder updateColProps, StringBuilder updateBatchColProps, Map<String, String> propJdbcTypes, Entry<String, String> entry) {
+            this.resultMap = resultMap;
+            this.baseColumn = baseColumn;
+            this.updateColProps = updateColProps;
+            this.updateBatchColProps = updateBatchColProps;
+            this.propJdbcTypes = propJdbcTypes;
+            this.entry = entry;
+        }
+
+        public String getPropName() {
+            return propName;
+        }
+
+        public String getColumnName() {
+            return columnName;
+        }
+
+        public Name invoke() {
+            propName = entry.getKey();
+            columnName = entry.getValue();
+
+            if (!("id".equals(propName))) {
+                resultMap.append("    <result column=\"").append(columnName).append("\" jdbcType=\"")
+                .append(propJdbcTypes.get(propName)).append("\" property=\"").append(propName)
+                .append("\" />\r\n");
+
+                if ((!("created".equals(propName))) && !("createdby".equals(propName))) {
+                    /**
+                     * <if test="code != null">
+                        CODE = #{code,jdbcType=VARCHAR},
+                      </if>
+                     */
+                    updateColProps.append("      <if test=\"").append(propName).append(" != null\">\r\n        ").append(columnName).append("=#{")
+                    .append(propName).append(",jdbcType=").append(propJdbcTypes.get(propName)).append("},\r\n").append("      </if>\r\n");
+
+                    /**
+                     * <if test="isDelete != null">
+                        IS_DELETE = #{item.isDelete,jdbcType=VARCHAR},
+                      </if>
+                     */
+                    updateBatchColProps.append("        <if test=\"item.").append(propName).append(" != null\">\r\n          ").append(columnName).append("=#{item.")
+                    .append(propName).append(",jdbcType=").append(propJdbcTypes.get(propName)).append("},\r\n").append("        </if>\r\n");
+                }
+
+            }
+            baseColumn.append(columnName).append(",");
+            return this;
+        }
+    }
 }

@@ -24,12 +24,8 @@ import com.hsy.mybatis.generator.config.Configuration;
  */
 
 public class DbUtil {
-
-
     private static Logger logger = LogManager.getLogger(DbUtil.class.getName());
-
     private static Connection connection = null;
-
     //获取数据库连接
     public static Connection getConn() {
         if (connection != null) return connection;

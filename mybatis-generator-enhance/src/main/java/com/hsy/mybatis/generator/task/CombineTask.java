@@ -38,7 +38,7 @@ public class CombineTask extends AbstractApplicationTask {
         Map<String, String> entity2Desc = (Map<String, String>) context.getAttribute("entityName.to.desc");
         Map<String, TableInfo> tableInfos = (Map<String, TableInfo>) context.getAttribute("tableInfos");
         
-        List<EntityInfo> entityInfos = new ArrayList<EntityInfo>();
+        List<EntityInfo> entityInfos = new ArrayList<>();
         for (Entry<String, String> entry : table2Entities.entrySet()) {
             EntityInfo entityInfo = new EntityInfo();
             
@@ -49,11 +49,11 @@ public class CombineTask extends AbstractApplicationTask {
             //表信息
             TableInfo tableInfo = tableInfos.get(tableName);
             
-            Set<String> imports = new HashSet<String>();
-            Map<String, String> propTypes = new LinkedHashMap<String, String>();
-            Map<String, String> propRemarks = new LinkedHashMap<String, String>();
-            Map<String, String> propJdbcTypes = new LinkedHashMap<String, String>();
-            Map<String, String> propName2ColumnNames = new LinkedHashMap<String, String>();
+            Set<String> imports = new HashSet<>();
+            Map<String, String> propTypes = new LinkedHashMap<>();
+            Map<String, String> propRemarks = new LinkedHashMap<>();
+            Map<String, String> propJdbcTypes = new LinkedHashMap<>();
+            Map<String, String> propName2ColumnNames = new LinkedHashMap<>();
             
             entityInfo.setTableName(tableName);
             entityInfo.setEntityName(entityName);

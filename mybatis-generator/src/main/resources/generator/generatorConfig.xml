@@ -70,7 +70,7 @@
              注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER -->
         <!--targetPackage="com.hsy.mybatis.generator.dao"
                              targetProject="D:\\devTools\\repository\\git\\hsy\\mybatis\\mybatis-generator\\src\\main\\java"-->
-        <javaClientGenerator type="MIXEDMAPPER"
+        <javaClientGenerator type="XMLMAPPER"
                              targetPackage="${mapperPackage}"
                              targetProject="${targetProject}">
             <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
@@ -78,13 +78,15 @@
         </javaClientGenerator>
 
         <!--% 通配符 匹配数据库中的所有表-->
-        <table tableName="t_question_choice">
+        <table tableName="platform_oauth_record">
             <!-- 参考 javaModelGenerator 的 constructorBased属性 -->
             <!--<property name="constructorBased" value="false" />-->
             <!-- 主键 -->
             <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
         </table>
-        <table tableName="t_question_judge"/>
-        <table tableName="t_question_short_answer"/>
+        <!--
+        <table tableName="platform_dic_info"/>
+        <table tableName="platform_dic_info_ref"/>
+        <table tableName="platform_oauth_info"/>-->
     </context>
 </generatorConfiguration>
